@@ -1,0 +1,18 @@
+server:
+  port: 8083
+
+sa-token:
+  token-name: token
+  timeout: 60
+  active-timeout: -1
+  is-concurrent: false
+  token-style: uuid
+  is-log: true
+
+spring:
+  profiles:
+    active: dev
+  servlet:
+    multipart:
+      max-file-size: 102400MB
+      max-request-size: 10240000MB

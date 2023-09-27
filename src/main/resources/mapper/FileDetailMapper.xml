@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.satoken.mapper.FileDetailMapper">
+
+    <resultMap id="BaseResultMap" type="com.satoken.entity.FileDetail">
+            <id property="id" column="id" jdbcType="VARCHAR"/>
+            <result property="url" column="url" jdbcType="VARCHAR"/>
+            <result property="size" column="size" jdbcType="BIGINT"/>
+            <result property="filename" column="filename" jdbcType="VARCHAR"/>
+            <result property="originalFilename" column="original_filename" jdbcType="VARCHAR"/>
+            <result property="basePath" column="base_path" jdbcType="VARCHAR"/>
+            <result property="path" column="path" jdbcType="VARCHAR"/>
+            <result property="ext" column="ext" jdbcType="VARCHAR"/>
+            <result property="contentType" column="content_type" jdbcType="VARCHAR"/>
+            <result property="platform" column="platform" jdbcType="VARCHAR"/>
+            <result property="thUrl" column="th_url" jdbcType="VARCHAR"/>
+            <result property="thFilename" column="th_filename" jdbcType="VARCHAR"/>
+            <result property="thSize" column="th_size" jdbcType="BIGINT"/>
+            <result property="thContentType" column="th_content_type" jdbcType="VARCHAR"/>
+            <result property="objectId" column="object_id" jdbcType="VARCHAR"/>
+            <result property="objectType" column="object_type" jdbcType="VARCHAR"/>
+            <result property="attr" column="attr" jdbcType="VARCHAR"/>
+            <result property="fileAcl" column="file_acl" jdbcType="VARCHAR"/>
+            <result property="thFileAcl" column="th_file_acl" jdbcType="VARCHAR"/>
+            <result property="createTime" column="create_time" jdbcType="TIMESTAMP"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        id,url,size,
+        filename,original_filename,base_path,
+        path,ext,content_type,
+        platform,th_url,th_filename,
+        th_size,th_content_type,object_id,
+        object_type,attr,file_acl,
+        th_file_acl,create_time
+    </sql>
+</mapper>
