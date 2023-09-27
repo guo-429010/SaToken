@@ -33,7 +33,13 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser>
         }
         StpUtil.login(sysUser.getId());
         StpUtil.getSession().set("user", sysUser);
-        return SaResult.ok("登录成功").setData(BeanUtil.copyProperties(sysUser, UserVo.class));
+        UserVo userVo = UserVo.builder()
+                .id(sysUser.getId())
+                .username(sysUser.getUsername())
+                .roles(StpUtil.getRoleList())
+                .permissions(StpUtil.getPermissionList())
+                .build();
+        return SaResult.ok("登录成功").setData(userVo);
     }
 
     @Override
