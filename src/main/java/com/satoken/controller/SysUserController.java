@@ -1,13 +1,12 @@
 package com.satoken.controller;
 
+import cn.dev33.satoken.annotation.SaCheckRole;
 import cn.dev33.satoken.util.SaResult;
 import com.satoken.dto.UserDto;
 import com.satoken.entity.SysUser;
 import com.satoken.service.SysUserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 public class SysUserController {
@@ -24,5 +23,16 @@ public class SysUserController {
     @PostMapping("/register")
     public SaResult register(@RequestBody SysUser user) {
         return sysUserService.register(user);
+    }
+
+    @GetMapping("/logout")
+    public SaResult logout() {
+        return sysUserService.logout();
+    }
+
+    @GetMapping("/resetPassword/{userId}")
+    @SaCheckRole("admin")
+    public SaResult resetPassword(@PathVariable(value = "userId") Integer userId) {
+        return sysUserService.resetPassword(userId);
     }
 }

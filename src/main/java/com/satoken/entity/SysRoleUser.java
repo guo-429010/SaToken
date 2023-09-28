@@ -5,17 +5,20 @@ import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import java.io.Serializable;
+
+import lombok.Builder;
 import lombok.Data;
 
 /**
- * 
+ *
  * @TableName sys_role_user
  */
 @TableName(value ="sys_role_user")
 @Data
+@Builder
 public class SysRoleUser implements Serializable {
     /**
-     * 
+     *
      */
     @TableId(value = "id", type = IdType.AUTO)
     private Integer id;

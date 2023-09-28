@@ -15,4 +15,8 @@ public interface SysUserService extends IService<SysUser> {
     SaResult login(UserDto user);
 
     SaResult register(SysUser user);
+
+    SaResult logout();
+
+    SaResult resetPassword(Integer userId);
 }
