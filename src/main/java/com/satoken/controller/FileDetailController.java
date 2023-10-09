@@ -1,5 +1,6 @@
 package com.satoken.controller;
 
+import cn.dev33.satoken.util.SaFoxUtil;
 import cn.dev33.satoken.util.SaResult;
 import cn.xuyanwu.spring.file.storage.FileInfo;
 import cn.xuyanwu.spring.file.storage.FileStorageService;
@@ -23,7 +24,7 @@ public class FileDetailController {
 
     @PostMapping("/upload")
     public SaResult upload(MultipartFile file,String customPath) {
-        if (customPath == null) {
+        if (SaFoxUtil.isEmpty(customPath)) {
             customPath = "common";
         }
         FileInfo fileInfo = fileStorageService.of(file)

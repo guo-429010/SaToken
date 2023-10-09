@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.satoken.mapper.SysMenuMapper">
+
+    <resultMap id="BaseResultMap" type="com.satoken.entity.SysMenu">
+            <id property="id" column="id" jdbcType="INTEGER"/>
+            <result property="menuName" column="menu_name" jdbcType="VARCHAR"/>
+            <result property="menuPath" column="menu_path" jdbcType="VARCHAR"/>
+            <result property="menuComponent" column="menu_component" jdbcType="VARCHAR"/>
+            <result property="menuIcon" column="menu_icon" jdbcType="VARCHAR"/>
+            <result property="menuParentId" column="menu_parent_id" jdbcType="INTEGER"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        id,menu_name,menu_path,
+        menu_component,menu_icon,menu_parent_id
+    </sql>
+</mapper>

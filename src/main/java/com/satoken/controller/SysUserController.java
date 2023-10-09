@@ -35,4 +35,9 @@ public class SysUserController {
     public SaResult resetPassword(@PathVariable(value = "userId") Integer userId) {
         return sysUserService.resetPassword(userId);
     }
+
+    @GetMapping("/menuList")
+    public SaResult menuList() {
+        return sysUserService.getMenuList();
+    }
 }

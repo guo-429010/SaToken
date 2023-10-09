@@ -19,4 +19,6 @@ public interface SysUserService extends IService<SysUser> {
     SaResult logout();
 
     SaResult resetPassword(Integer userId);
+
+    SaResult getMenuList();
 }

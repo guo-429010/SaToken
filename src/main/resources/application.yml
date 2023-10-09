@@ -3,7 +3,7 @@ server:
 
 sa-token:
   token-name: token
-  timeout: 60
+  timeout: 3600
   active-timeout: -1
   is-concurrent: false
   token-style: uuid
