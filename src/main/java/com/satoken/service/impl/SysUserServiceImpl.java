@@ -2,9 +2,7 @@ package com.satoken.service.impl;
 
 import cn.dev33.satoken.secure.SaSecureUtil;
 import cn.dev33.satoken.stp.StpUtil;
-import cn.dev33.satoken.util.SaFoxUtil;
 import cn.dev33.satoken.util.SaResult;
-import cn.hutool.core.bean.BeanUtil;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.satoken.common.Constant;
@@ -130,7 +128,6 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser>
         return SaResult.ok().setData(subMenuList);
     }
 }
-
 
 
 

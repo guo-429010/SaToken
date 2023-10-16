@@ -2,8 +2,10 @@ package com.satoken.controller;
 
 import cn.dev33.satoken.annotation.SaCheckRole;
 import cn.dev33.satoken.util.SaResult;
+import com.satoken.annotation.OperLog;
 import com.satoken.dto.UserDto;
 import com.satoken.entity.SysUser;
+import com.satoken.enums.BusinessType;
 import com.satoken.service.SysUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -32,12 +34,15 @@ public class SysUserController {
 
     @GetMapping("/resetPassword/{userId}")
     @SaCheckRole("admin")
+    @OperLog(title = "重置密码", businessType = BusinessType.UPDATE)
     public SaResult resetPassword(@PathVariable(value = "userId") Integer userId) {
         return sysUserService.resetPassword(userId);
     }
 
     @GetMapping("/menuList")
+    @OperLog(title = "获取菜单列表", businessType = BusinessType.QUERY)
     public SaResult menuList() {
         return sysUserService.getMenuList();
     }
+
 }
