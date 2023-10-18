@@ -1,15 +1,21 @@
 package com.satoken.controller;
 
 import cn.dev33.satoken.annotation.SaCheckRole;
+import cn.dev33.satoken.annotation.SaIgnore;
 import cn.dev33.satoken.util.SaResult;
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import com.satoken.annotation.OperLog;
 import com.satoken.dto.UserDto;
 import com.satoken.entity.SysUser;
 import com.satoken.enums.BusinessType;
 import com.satoken.service.SysUserService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Date;
+
+@Slf4j
 @RestController
 public class SysUserController {
 
@@ -43,6 +49,12 @@ public class SysUserController {
     @OperLog(title = "获取菜单列表", businessType = BusinessType.QUERY)
     public SaResult menuList() {
         return sysUserService.getMenuList();
+    }
+
+    @PostMapping("/test")
+    @OperLog(title = "测试", businessType = BusinessType.INSERT)
+    public SaResult test(@RequestBody SysUser sysUser) {
+        return SaResult.ok().setData(new Date());
     }
 
 }

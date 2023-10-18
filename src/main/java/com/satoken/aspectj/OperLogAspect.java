@@ -6,6 +6,7 @@ import com.satoken.common.Constant;
 import com.satoken.entity.SysOperLog;
 import com.satoken.entity.SysUser;
 import com.satoken.service.SysOperLogService;
+import com.satoken.utils.*;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.ArrayUtils;
 import org.aspectj.lang.JoinPoint;
@@ -18,12 +19,12 @@ import org.springframework.stereotype.Component;
 import com.alibaba.fastjson2.JSON;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.multipart.MultipartFile;
-import utils.*;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.Collection;
+import java.util.Date;
 import java.util.Map;
 
 @Slf4j
@@ -74,7 +75,6 @@ public class OperLogAspect {
             sysOperLog.setStatus(Constant.Business_Success);
             String ip = IpUtils.getIpAddr();
             sysOperLog.setOperIp(ip);
-            sysOperLog.setOperLocation(AddressUtils.getRealAddressByIP(ip));
             sysOperLog.setOperUrl(StringUtils.substring(ServletUtils.getRequest().getRequestURI(),0,255));
             if (user != null) {
                 sysOperLog.setOperName(user.getUsername());
@@ -92,7 +92,10 @@ public class OperLogAspect {
             getControllerMethodDescription(joinPoint, controllerLog, sysOperLog, jsonResult);
             // 设置消耗时间
             sysOperLog.setCostTime(System.currentTimeMillis() - START_TIME.get());
-            sysOperLogService.save(sysOperLog);
+            // 设置操作时间
+            sysOperLog.setOperTime(new Date());
+            // 写入数据库
+            sysOperLogService.Insert(sysOperLog);
         } catch (Exception exp) {
             log.error("异常信息:{}", exp.getMessage());
             exp.printStackTrace();

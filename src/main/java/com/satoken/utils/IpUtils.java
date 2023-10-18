@@ -1,4 +1,4 @@
-package utils;
+package com.satoken.utils;
 
 import javax.servlet.http.HttpServletRequest;
 

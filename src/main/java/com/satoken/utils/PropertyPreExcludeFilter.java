@@ -1,4 +1,4 @@
-package utils;
+package com.satoken.utils;
 
 import com.alibaba.fastjson2.filter.SimplePropertyPreFilter;
 
