@@ -44,13 +44,18 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser>
     @Resource
     private SysMenuService sysMenuService;
 
+    @Resource
+    private SysLoginInfoService sysLoginInfoService;
+
     @Override
     public SaResult login(UserDto user) {
         SysUser sysUser = getOne(new QueryWrapper<SysUser>().eq("username", user.getUsername()));
         if (sysUser == null) {
+            sysLoginInfoService.Insert(user.getUsername(), Constant.Business_Fail, "登录失败，用户不存在");
             return SaResult.error("用户不存在");
         }
         if (!user.getPassword().equals(SaSecureUtil.rsaDecryptByPrivate(privateKey, sysUser.getPassword()))) {
+            sysLoginInfoService.Insert(user.getUsername(), Constant.Business_Fail, "登录失败，密码错误");
             return SaResult.error("密码错误");
         }
         StpUtil.login(sysUser.getId());
@@ -61,6 +66,7 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser>
                 .roles(StpUtil.getRoleList())
                 .permissions(StpUtil.getPermissionList())
                 .build();
+        sysLoginInfoService.Insert(user.getUsername(), Constant.Business_Success, "登录成功");
         return SaResult.ok("登录成功").setData(userVo);
     }
 
