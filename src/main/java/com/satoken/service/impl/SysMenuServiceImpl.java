@@ -9,6 +9,7 @@ import com.satoken.mapper.SysMenuMapper;
 import com.satoken.vo.MenuVo;
 import org.springframework.stereotype.Service;
 
+import javax.annotation.Resource;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -20,6 +21,14 @@ import java.util.stream.Collectors;
 @Service
 public class SysMenuServiceImpl extends ServiceImpl<SysMenuMapper, SysMenu>
     implements SysMenuService{
+
+    @Resource
+    private SysMenuMapper sysMenuMapper;
+
+    @Override
+    public List<SysMenu> userMenuList(List<Integer> roleIdList) {
+        return sysMenuMapper.selectUserMenuList(roleIdList);
+    }
 
     /**
      * 获取目录列表

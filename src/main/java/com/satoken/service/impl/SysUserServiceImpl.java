@@ -16,10 +16,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
-import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 import java.util.stream.Collectors;
 
 
@@ -43,9 +40,6 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser>
 
     @Resource
     private SysRoleService sysRoleService;
-
-    @Resource
-    private SysMenuRoleService sysMenuRoleService;
 
     @Resource
     private SysMenuService sysMenuService;
@@ -105,22 +99,11 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser>
 
     @Override
     public SaResult getMenuList() {
-        // 根据用户角色获取角色id
-        List<Integer> roleIdList = StpUtil.getRoleList()
+        List<Integer> roleIds = sysRoleService.getUserRole(StpUtil.getLoginId())
                 .stream()
-                .map(item -> sysRoleService.getOne(new QueryWrapper<SysRole>().eq("role_identify", item)).getId())
+                .map(SysRole::getId)
                 .collect(Collectors.toList());
-        // 根据角色id获取菜单
-        Set<SysMenu> menuSet = new HashSet<>();
-        roleIdList.forEach(id -> {
-            List<SysMenu> list = sysMenuRoleService.list(new QueryWrapper<SysMenuRole>().eq("role_id", id))
-                    .stream()
-                    .map(SysMenuRole::getMenuId)
-                    .map(m -> sysMenuService.getById(m))
-                    .collect(Collectors.toList());
-            menuSet.addAll(list);
-        });
-        List<SysMenu> menuList = new ArrayList<>(menuSet);
+        List<SysMenu> menuList = sysMenuService.userMenuList(roleIds);
         List<MenuVo> subMenuList = sysMenuService.listSubMenu(menuList);
         for (MenuVo menu : subMenuList) {
             menu.setChildren(sysMenuService.listMenuItem(menu.getId(), menuList));

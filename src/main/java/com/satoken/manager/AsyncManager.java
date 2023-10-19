@@ -15,7 +15,7 @@ public class AsyncManager {
      */
     private static final int DELAY_TIME = 1000;
 
-    private static ScheduledExecutorService scheduledExecutorService = Executors.newScheduledThreadPool(1);
+    private static ScheduledExecutorService scheduledExecutorService = Executors.newScheduledThreadPool(5);
 
     public static void execute(TimerTask task) {
         scheduledExecutorService.schedule(task, DELAY_TIME, TimeUnit.MILLISECONDS);

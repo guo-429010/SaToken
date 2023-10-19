@@ -3,6 +3,8 @@ package com.satoken.mapper;
 import com.satoken.entity.SysPermission;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 
+import java.util.List;
+
 /**
 * @author jiuho
 * @description 针对表【sys_permission】的数据库操作Mapper
@@ -11,6 +13,7 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 */
 public interface SysPermissionMapper extends BaseMapper<SysPermission> {
 
+    List<SysPermission> selectUserPermission(List<Integer> roleIds);
 }
 
 

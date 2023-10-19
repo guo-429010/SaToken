@@ -13,4 +13,22 @@
     <sql id="Base_Column_List">
         id,permission_identify,permission_name
     </sql>
+
+    <select id="selectUserPermission" resultType="com.satoken.entity.SysPermission">
+        SELECT DISTINCT
+            p.id,
+            p.permission_name,
+            p.permission_identify
+        FROM
+            sys_permission AS p
+                LEFT JOIN
+            sys_permission_role AS pr
+            ON
+                pr.permission_id = p.id
+        WHERE
+            pr.role_id IN
+        <foreach collection="list" item="roleId" open="(" separator="," close=")">
+            #{roleId}
+        </foreach>
+    </select>
 </mapper>

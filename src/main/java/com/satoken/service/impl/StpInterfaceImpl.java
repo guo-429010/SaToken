@@ -1,21 +1,14 @@
 package com.satoken.service.impl;
 
 import cn.dev33.satoken.stp.StpInterface;
-import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
-import com.satoken.entity.SysPermissionRole;
 import com.satoken.entity.SysRole;
-import com.satoken.entity.SysRoleUser;
-import com.satoken.service.SysPermissionRoleService;
 import com.satoken.service.SysPermissionService;
 import com.satoken.service.SysRoleService;
-import com.satoken.service.SysRoleUserService;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.Resource;
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 import java.util.stream.Collectors;
 
 /**
@@ -24,17 +17,14 @@ import java.util.stream.Collectors;
 @Component
 public class StpInterfaceImpl implements StpInterface {
 
-    @Resource
-    private SysRoleUserService sysRoleUserService;
-
-    @Resource
-    private SysPermissionRoleService sysPermissionRoleService;
 
     @Resource
     private SysRoleService sysRoleService;
 
     @Resource
     private SysPermissionService sysPermissionService;
+
+    List<SysRole> roleList = new ArrayList<>();
 
     /**
      * 返回指定账号的权限列表
@@ -44,20 +34,7 @@ public class StpInterfaceImpl implements StpInterface {
      */
     @Override
     public List<String> getPermissionList(Object loginId, String loginType) {
-        List<Integer> list = getRoleList(loginId, loginType)
-                .stream()
-                .map(item -> sysRoleService.getOne(new QueryWrapper<SysRole>().eq("role_identify", item)).getId())
-                .collect(Collectors.toList());
-        Set<String> permissions = new HashSet<>();
-        list.forEach(item -> {
-            List<String> perList = sysPermissionRoleService.list(new QueryWrapper<SysPermissionRole>().eq("role_id", item))
-                    .stream()
-                    .map(SysPermissionRole::getPermissionId)
-                    .map(p -> sysPermissionService.getById(p).getPermissionIdentify())
-                    .collect(Collectors.toList());
-            permissions.addAll(perList);
-        });
-        return new ArrayList<>(permissions);
+        return sysPermissionService.getUserPermission(roleList.stream().map(SysRole::getId).collect(Collectors.toList()));
     }
 
     /**
@@ -68,9 +45,7 @@ public class StpInterfaceImpl implements StpInterface {
      */
     @Override
     public List<String> getRoleList(Object loginId, String loginType) {
-         return sysRoleUserService.list(new QueryWrapper<SysRoleUser>().eq("user_id", loginId))
-                 .stream()
-                 .map(item -> sysRoleService.getById(item.getRoleId()).getRoleIdentify())
-                 .collect(Collectors.toList());
+        roleList = sysRoleService.getUserRole(loginId);
+        return roleList.stream().map(SysRole::getRoleIdentify).collect(Collectors.toList());
     }
 }

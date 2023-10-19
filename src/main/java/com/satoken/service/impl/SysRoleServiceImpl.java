@@ -6,6 +6,9 @@ import com.satoken.service.SysRoleService;
 import com.satoken.mapper.SysRoleMapper;
 import org.springframework.stereotype.Service;
 
+import javax.annotation.Resource;
+import java.util.List;
+
 /**
 * @author jiuho
 * @description 针对表【sys_role】的数据库操作Service实现
@@ -14,6 +17,14 @@ import org.springframework.stereotype.Service;
 @Service
 public class SysRoleServiceImpl extends ServiceImpl<SysRoleMapper, SysRole>
     implements SysRoleService{
+
+    @Resource
+    private SysRoleMapper sysRoleMapper;
+
+    @Override
+    public List<SysRole> getUserRole(Object loginId) {
+        return sysRoleMapper.selectUserRole(loginId);
+    }
 
 }
 

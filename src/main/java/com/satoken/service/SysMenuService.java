@@ -13,6 +13,8 @@ import java.util.List;
 */
 public interface SysMenuService extends IService<SysMenu> {
 
+    List<SysMenu> userMenuList(List<Integer> roleIdList);
+
     List<MenuVo> listSubMenu(List<SysMenu> menuList);
 
     List<MenuVo> listMenuItem(Integer menuParentId,List<SysMenu> menuList);

@@ -17,4 +17,22 @@
         id,menu_name,menu_path,
         menu_component,menu_icon,menu_parent_id
     </sql>
+
+    <select id="selectUserMenuList" resultType="com.satoken.entity.SysMenu">
+        SELECT DISTINCT
+            m.id,
+            m.menu_name,
+            m.menu_path,
+            m.menu_component,
+            m.menu_icon,
+            m.menu_parent_id
+        FROM
+            sys_menu AS m
+                LEFT JOIN sys_menu_role mr ON mr.menu_id = m.id
+        WHERE
+            mr.role_id IN
+        <foreach collection="list" item="roleId" open="(" separator="," close=")">
+            #{roleId}
+        </foreach>
+    </select>
 </mapper>

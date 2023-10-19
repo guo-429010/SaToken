@@ -3,6 +3,8 @@ package com.satoken.mapper;
 import com.satoken.entity.SysRole;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 
+import java.util.List;
+
 /**
 * @author jiuho
 * @description 针对表【sys_role】的数据库操作Mapper
@@ -11,6 +13,7 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 */
 public interface SysRoleMapper extends BaseMapper<SysRole> {
 
+    List<SysRole> selectUserRole(Object loginId);
 }
 
 
